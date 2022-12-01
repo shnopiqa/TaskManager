@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 using TaskManagerCourse.Client.Views.AddWindows;
 using TaskManagerCourse.Common.Models;
 
@@ -50,7 +51,7 @@ namespace TaskManagerCourse.Client.Services
             }
             return filePath;
         }
-        public void SetPhotoForObject(CommonModel model) 
+        public CommonModel SetPhotoForObject(CommonModel model) 
         {
             string photoPath = GetFileFromDialog(_imageDialogFilterPattern);
             if(string.IsNullOrEmpty(photoPath) == false) 
@@ -58,6 +59,8 @@ namespace TaskManagerCourse.Client.Services
                 var photoBytes = File.ReadAllBytes(photoPath);
                 model.Photo = photoBytes;
             }
+            return model;
         }
+        
     }
 }

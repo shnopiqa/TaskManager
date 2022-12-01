@@ -142,8 +142,8 @@ namespace TaskManagerCourse.Client.ViewModels
         }
         private void OpenMyDesksPage()
         {
-            SelectedPageName = _userDesksBtnName;
-            _viewService.ShowMessage(_userDesksBtnName);
+            var page = new UserDesksPage();
+            OpenPage(page, _userDesksBtnName, new UserDeskPageViewModel(Token));
         }
         private void OpenMyTasksPage()
         {

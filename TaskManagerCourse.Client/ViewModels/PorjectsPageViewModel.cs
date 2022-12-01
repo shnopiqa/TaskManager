@@ -229,13 +229,15 @@ namespace TaskManagerCourse.Client.ViewModels
         }
         private void AddUsersToProject() 
         {
-            if(SelectedUsersForProject == null || SelectedUsersForProject?.Count > 0) 
+            if (SelectedUsersForProject == null || SelectedUsersForProject?.Count == 0)
             {
-                _viewService.ShowMessage("SelectUsers");
+                _viewService.ShowMessage("Select users");
                 return;
             }
-           var resultAction = _projectsRequestService.AddUsersToProject(_token, SelectedProject.Model.Id, SelectedUsersForProject.Select(user => user.Id).ToList());
-            _viewService.ShowActionResult(resultAction, "Users is Added to Project");
+
+            var resultAction = _projectsRequestService.AddUsersToProject(_token, SelectedProject.Model.Id, SelectedUsersForProject.Select(user => user.Id).ToList());
+            _viewService.ShowActionResult(resultAction, "New users are added to project");
+
             UpdatePage();
 
 

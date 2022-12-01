@@ -9,21 +9,26 @@
       Title="UserDesksPage">
 
     <Grid>
-        <ListView ItemsSource="{Binding AllTasks}">
+        <ListView ItemsSource="{Binding AllDesks}" SelectedItem="{Binding SelectedDesk}"
+                  SelectionMode="Single">
+            <ListView.ContextMenu>
+                <ContextMenu ItemsSource="{Binding ContextMenuCommands}">
+                    <ContextMenu.ItemTemplate>
+                        <DataTemplate>
+                            <MenuItem Header="{Binding Key}" Command="{Binding Value}"/>
+                        </DataTemplate>
+                    </ContextMenu.ItemTemplate>
+                </ContextMenu>
+            </ListView.ContextMenu>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="ID"
                                     DisplayMemberBinding="{Binding Path=Model.Id}"/>
                     <GridViewColumn Header="Name"
                                     DisplayMemberBinding="{Binding Path=Model.Name}"/>
-                    <GridViewColumn Header="Creator"
-                                    DisplayMemberBinding="{Binding Path=Creator}"/>
-                    <GridViewColumn Header="Executor"
-                                    DisplayMemberBinding="{Binding Path=Executor}"/>
-                    <GridViewColumn Header="Start"
-                                    DisplayMemberBinding="{Binding Path=Model.StartDate}"/>
-                    <GridViewColumn Header="End"
-                                    DisplayMemberBinding="{Binding Path=Model.EndDate}"/>
+                    <GridViewColumn Header="Description"
+                                    DisplayMemberBinding="{Binding Path=Model.Description}"/>
+                    
                 </GridView>
             </ListView.View>
         </ListView>
