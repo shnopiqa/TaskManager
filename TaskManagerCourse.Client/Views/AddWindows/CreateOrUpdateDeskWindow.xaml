@@ -56,7 +56,7 @@
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <TextBox Text="{Binding Value}" Width="150" Style="{StaticResource CommonTextBox}"/>
-                                        <Button Content="-" Command="{Binding Path=DataContext.RemoveColumnItemCommand,
+                                        <Button Content="-" Command="{Binding Path=DataContext.RemoveItemColumnCommand,
                                             RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                 CommandParameter="{Binding}"
                                                 Style="{StaticResource CommonBtnRed}"/>

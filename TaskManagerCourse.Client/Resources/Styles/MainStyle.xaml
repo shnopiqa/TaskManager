@@ -3,10 +3,12 @@
 
     <Brush x:Key="commonBlueColor">#0696d7</Brush>
     <Brush x:Key="CommonRedColor">Red</Brush>
+    <Brush x:Key="blueCollor">#bddeff</Brush>
     <Brush x:Key="ommonGrayColor">#FF8D8D8D</Brush>
     <Brush x:Key="ommonGreenColor">Green</Brush>
     <FontStyle x:Key="CommonFontStyle">Normal</FontStyle>
-    
+    <Brush x:Key="deskColumnMouseCollor">#abcbd9</Brush>
+
     <Style TargetType="TextBox" x:Key="CommonTextBox">
         <Setter Property="Height" Value="20"/>
         <Setter Property="FontStyle" Value="{StaticResource CommonFontStyle}"/>
@@ -108,8 +110,35 @@
     <Style TargetType="Border" x:Key="desksPanelBorder" BasedOn="{StaticResource MainPanelBorder}">
         <Setter Property="Background" Value="#edfff2"/>
     </Style>
+    <Style TargetType="Border" x:Key="tasksPanelBorder" BasedOn="{StaticResource MainPanelBorder}">
+        <Setter Property="Background" Value="{StaticResource blueCollor}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Margin" Value="0,10"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
     <Style TargetType="CheckBox" x:Key="CommonChekBox">
         <Setter Property="BorderBrush" Value="{StaticResource commonBlueColor}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+    <Style TargetType="Border" x:Key="userBorderPanel" BasedOn="{StaticResource CommonBorder}">
+        <Setter Property="Width" Value ="Auto"/>
+    </Style>
+
+    <Style TargetType="ItemsControl" x:Key="tasksCommonPanel">
+        <Setter Property="Background" Value="{StaticResource blueCollor}"/>
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="BorderBrush" Value="Gray"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Style.Resources>
+            <Style TargetType="{x:Type Border}">
+                <Setter Property="CornerRadius" Value="3"/>
+            </Style>
+        </Style.Resources>
+        <Style.Triggers>
+            <Trigger Property="IsMouseCaptured" Value="True">
+                <Setter Property="Background" Value="{StaticResource deskColumnMouseCollor}"/>
+            </Trigger>
+            
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

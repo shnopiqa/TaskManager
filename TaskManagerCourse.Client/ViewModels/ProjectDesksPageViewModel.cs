@@ -13,6 +13,7 @@ using TaskManagerCourse.Common.Models;
 
 using TaskManagerCourse.Client.Views.AddWindows;
 using System.IO;
+using TaskManagerCourse.Client.Views.Pages;
 
 namespace TaskManagerCourse.Client.ViewModels
 {
@@ -22,6 +23,7 @@ namespace TaskManagerCourse.Client.ViewModels
         private DesksRequestService _desksRequestService;
         private UserRequestService _usersRequestService;
         private DesksViewService _desksViewService;
+        private MainWindowViewModel _mainWindowViewModel;
         #region COMMANDS
         public DelegateCommand OpenNewDeskCommand { get; private set; }
         public DelegateCommand<object> OpenUpdateDeskCommand { get; private set; }
@@ -29,7 +31,8 @@ namespace TaskManagerCourse.Client.ViewModels
         public DelegateCommand DeleteDeskCommand { get; private set; }
         public DelegateCommand SelectPhotoForDeskCommand { get; private set; }
         public DelegateCommand AddNewColumnItemCommand { get; private set; }
-        public DelegateCommand<object> RemoveColumnItemCommand { get; private set; }
+        public DelegateCommand<object> RemoveItemColumnCommand { get; private set; }
+        public DelegateCommand<object> OpenDeskTaskPageCommand { get; private set; }
 
         #endregion
         #region PROPETIES
@@ -39,7 +42,7 @@ namespace TaskManagerCourse.Client.ViewModels
         {
             get => _usersRequestService.GetCurrentUser(_token);
         }
-        public ProjectDesksPageViewModel(AuthToken token, ProjectModel project) 
+        public ProjectDesksPageViewModel(AuthToken token, ProjectModel project, MainWindowViewModel mainWindowView) 
         {
             _token = token;
             _project = project;
@@ -47,6 +50,7 @@ namespace TaskManagerCourse.Client.ViewModels
             _desksRequestService = new DesksRequestService();
             _usersRequestService = new UserRequestService();
             _desksViewService = new DesksViewService(_token, _desksRequestService);
+            _mainWindowViewModel = mainWindowView;
             UpdatePage();
             
             OpenNewDeskCommand = new DelegateCommand(OpenNewDesk);
@@ -55,8 +59,8 @@ namespace TaskManagerCourse.Client.ViewModels
             DeleteDeskCommand = new DelegateCommand(DeleteDesk);
             SelectPhotoForDeskCommand = new DelegateCommand(SelectPhotoForDesk);
             AddNewColumnItemCommand = new DelegateCommand(AddNewColumnItem);
-            RemoveColumnItemCommand = new DelegateCommand<object>(RemoveColumnItem);
-
+            RemoveItemColumnCommand = new DelegateCommand<object>(RemoveColumnItem);
+            OpenDeskTaskPageCommand = new DelegateCommand<object>(OpenDeskTask);
 
         }
         private List<ModelClient<DeskModel>> _projectDesks = new List<ModelClient<DeskModel>>();
@@ -197,8 +201,14 @@ namespace TaskManagerCourse.Client.ViewModels
         {
             SelectedDesk =_desksViewService.SelectPhotoForDesk(SelectedDesk);
             //SelectedDesk = new ModelClient<DeskModel>(SelectedDesk.Model);
-          
-
         }
+        private void OpenDeskTask(object deskId) 
+        {
+            SelectedDesk = _desksViewService.GetDeskClientById(deskId);
+            var page = new DeskTasksPage();
+            var context = new DesksTasksPageViewModel(_token, SelectedDesk.Model, page);
+            _mainWindowViewModel.OpenPage(page, $"Task of {SelectedDesk.Model.Name}", context);
+        }
+       
     }
 }
